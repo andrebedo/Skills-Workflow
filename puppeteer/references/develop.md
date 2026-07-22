@@ -1,8 +1,3 @@
----
-name: develop
-description: Implement requirements as coherent end-to-end vertical slices. Use only when the workflow skill routes the active session to develop.
----
-
 # Develop
 
 Implement every acceptance criterion and hand test-ready code to the `test` phase.
@@ -11,13 +6,13 @@ Implement every acceptance criterion and hand test-ready code to the `test` phas
 
 Read first:
 
-- `docs/project/REQUIREMENTS.md` for the requirement and acceptance criteria.
-- `docs/project/NEXT_STEP_CONTEXT.md` for the active requirement context.
-- `docs/project/CONTEXT.md` for the general architecture.
+- `docs/REQUIREMENTS.md` for the requirement and acceptance criteria.
+- `docs/NEXT_STEP_CONTEXT.md` for the active requirement context.
+- `docs/CONTEXT.md` for the general architecture.
 
-When present, read `docs/project/ARCHITECTURE.md` for detailed system boundaries, dependencies, and end-to-end flows.
+When present, read `docs/ARCHITECTURE.md` for detailed system boundaries, dependencies, and end-to-end flows.
 
-Also read `docs/project/WORKFLOW.md`, `docs/project/DECISIONS.md`, `docs/project/GLOSSARY.md`, and the relevant code. The code is authoritative for the current implementation; documents are authoritative for intended behavior and approved decisions.
+Also read `docs/WORKFLOW.md`, `docs/DECISIONS.md`, `docs/GLOSSARY.md`, and the relevant code. The code is authoritative for the current implementation; documents are authoritative for intended behavior and approved decisions.
 
 ## Steps
 
@@ -38,11 +33,11 @@ Also read `docs/project/WORKFLOW.md`, `docs/project/DECISIONS.md`, `docs/project
    Completion criterion: relevant checks pass; unavailable checks and unrelated failures are evidenced and recorded; failures caused by the change block completion.
 
 5. Update shared project state.
-   Follow the existing structures in `docs/project`. Update `docs/project/DECISIONS.md` for approved implementation decisions, `docs/project/CONTEXT.md` for general architectural changes, and `docs/project/GLOSSARY.md` for changed domain language. Do not change `docs/project/REQUIREMENTS.md` without explicit approval. Update `docs/project/NEXT_STEP_CONTEXT.md` with completed slices, acceptance-criterion-to-change mapping, changed files, affected contracts and flows, verification results, modified existing tests, scenarios for `test`, assumptions, residual risks, debt, and blockers.
+   Follow the existing structures in `docs/`. Update `docs/DECISIONS.md` for approved implementation decisions, `docs/CONTEXT.md` for general architectural changes, and `docs/GLOSSARY.md` for changed domain language. Do not change `docs/REQUIREMENTS.md` without explicit approval. Update `docs/NEXT_STEP_CONTEXT.md` with completed slices, acceptance-criterion-to-change mapping, changed files, affected contracts and flows, verification results, modified existing tests, scenarios for `test`, assumptions, residual risks, debt, and blockers.
    Completion criterion: the repository and project documents contain every fact the `test` phase needs without chat history.
 
 Do not commit, push, or open a pull request.
 
 ## Return
 
-Return the phase result to `workflow`; do not edit `WORKFLOW.md` or start `test`. Recommend `test` when passed, or `develop` when blocked or revision is needed.
+Return the phase result to `Puppeteer`; do not edit `WORKFLOW.md` or start `test`. Recommend `test` when passed, or `develop` when blocked or revision is needed.

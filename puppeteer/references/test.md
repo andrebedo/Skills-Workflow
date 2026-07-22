@@ -1,17 +1,22 @@
----
-name: test
-description: Verify development one observable behavior at a time through a red-green gate. Use only when the workflow skill routes the active session to test.
----
-
 # Test
 
 Build behavioral evidence for the changed slice and route only a green gate to `review`.
 
+## Independent Test Agent
+
+The primary agent orchestrates this phase but never performs its test work. At every entry into `test`, spawn one fresh secondary agent as the sole test agent. Do not reuse an agent from an earlier `test -> develop -> test` cycle, and do not allow the test agent to spawn further agents.
+
+Give the test agent no inherited conversation or development reasoning. Its context is limited to the durable repository artifacts named under Sources, the changed code, and repository test conventions. The test agent may create and correct tests and may update `docs/TEST.md` and `docs/NEXT_STEP_CONTEXT.md`; it must not modify application code or `docs/WORKFLOW.md`.
+
+Before delegation, the primary agent records the application-code state needed to attribute later changes. After the test agent returns, the primary agent validates its structured phase result and verifies that it contains commands or manual steps, essential output, states, involved files, and acceptance-criterion coverage. The primary agent does not rerun tests. Missing, incomplete, contradictory, or unverifiable evidence is an agent failure.
+
+If the test agent cannot be started, terminates unsuccessfully, returns a non-conforming result, or modifies application code, discard or revert only the application-code changes attributable to that agent and make one automatic recovery attempt with a fresh isolated test agent. Preserve valid test and documentation changes when they can be attributed safely. If the recovery agent also fails, return `agent_failed`; do not classify any test as `BLOCKED` merely because an agent failed, and never fall back to primary-agent test execution. Recommend a fresh `test` phase.
+
 ## Sources
 
-Read `docs/project/REQUIREMENTS.md`, `docs/project/NEXT_STEP_CONTEXT.md`, `docs/project/CONTEXT.md`, `docs/project/WORKFLOW.md`, and the changed code. Use `tdd` and its references when available; otherwise this skill's tracer-bullet and red-green rules are authoritative.
+Read `docs/REQUIREMENTS.md`, `docs/NEXT_STEP_CONTEXT.md`, `docs/CONTEXT.md`, `docs/WORKFLOW.md`, and the changed code. Use `tdd` and its references when available; otherwise this skill's tracer-bullet and red-green rules are authoritative.
 
-Create `docs/project/TEST.md` on the first test run. Thereafter preserve its execution history and update it after every test execution.
+Create `docs/TEST.md` on the first test run. Thereafter preserve its execution history and update it after every test execution.
 
 ## Steps
 
@@ -41,7 +46,7 @@ Create `docs/project/TEST.md` on the first test run. Thereafter preserve its exe
 
 7. Evaluate and route the gate.
    Require green acceptance tests, pertinent regressions, type-check, lint, and build; require no in-scope `RED`, `NOT RUN`, or `BLOCKED`. Record proven pre-existing unrelated failures without blocking. Summarize results in `NEXT_STEP_CONTEXT.md`. When green, recommend `review`; when blocked, recommend `test`; when red, recommend `develop`.
-   Completion criterion: a fresh `$workflow` run selects the correct next action without chat history.
+   Completion criterion: a fresh `$puppeteer` run selects the correct next action without chat history.
 
 ## TEST.md Contract
 
@@ -49,4 +54,4 @@ Keep an immutable execution log and an updateable `Current gate`. Assign stable 
 
 ## Return
 
-Return the phase result to `workflow`; do not edit `WORKFLOW.md` or start another phase.
+Return the phase result to `Puppeteer`; do not edit `WORKFLOW.md` or start another phase. The allowed results from this playbook are `passed`, `needs_correction`, `blocked`, and `agent_failed`. Use `agent_failed` only for failure of both the initial test agent and its single automatic recovery agent; display it as `AGENT_FAILED` in user-facing reports.

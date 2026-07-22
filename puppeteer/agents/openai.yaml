@@ -1,0 +1,4 @@
+interface:
+  display_name: "Puppeteer"
+  short_description: "Guide projects from idea to verified completion"
+  default_prompt: "Use $puppeteer to start or resume the gated workflow in this project."

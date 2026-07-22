@@ -1,6 +1,10 @@
-# Third-party support skills kept locally but not published with this personal kit.
-/.agent-skills/diagnose/
-/.agent-skills/tdd/
-/.agent-skills/grill-me/
-/.agent-skills/handoff/
-/.agent-skills/zoom-out/
+# Python artifacts from local validation
+__pycache__/
+*.py[cod]
+
+# Temporary Puppeteer validation workspaces
+.puppeteer-test/
+
+# OS metadata
+.DS_Store
+Thumbs.db
